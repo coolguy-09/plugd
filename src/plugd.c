@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 	if (argc > 1 && strcmp(argv[1], "--version") == 0) {
-		printf("plugd v1.0\n");
+		printf("plugd v1.0-1\n");
 		return 0;
 	}
 
