@@ -15,8 +15,14 @@ int main(int argc, char *argv[]) {
 	}
 	if (argc > 1 && strcmp(argv[1], "--help") == 0) {
 		printf("Usage for plugd: \n");
-		printf("  plugd [--daemon]\n");
+		printf("  plugd [--help|--version|--daemon]\n");
+		printf("    --help: Show this help dialouge.\n");
+		printf("    --version: Show the version of plugd.\n");
 		printf("    --daemon: Run in the background.\n");
+		return 0;
+	}
+	if (argc > 1 && strcmp(argv[1], "--version") == 0) {
+		printf("plugd v1.0\n");
 		return 0;
 	}
 
