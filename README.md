@@ -1,5 +1,5 @@
 # plugd
-A simple udev-clone that's fast and lightweight.
+A simple udev clone that's fast and lightweight.
 
 ## How to compile plugd?
 ### We first need to install some tools:
