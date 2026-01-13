@@ -12,11 +12,11 @@
 #include <debug.h>
 
 int main(int argc, char *argv[]) {
-	for (int i = 0; i < argc; i++) {
+	int do_daemonize = 0;
+	for (int i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "--daemon") == 0) {
-			daemonize();
-		}
-		if (strcmp(argv[i], "--help") == 0) {
+			do_daemonize = 1;
+		} else if (strcmp(argv[i], "--help") == 0) {
 			printf("Usage for plugd: \n");
 			printf("  plugd [OPTIONS]\n");
 			printf("  Options:\n");
@@ -25,14 +25,20 @@ int main(int argc, char *argv[]) {
 			printf("    --daemon: Run in the background.\n");
 			printf("    --debug: Show debug logs.\n");
 			return 0;
-		}
-		if (strcmp(argv[i], "--version") == 0) {
+		} else if (strcmp(argv[i], "--version") == 0) {
 			printf("plugd v1.1.1\n");
 			return 0;
-		}
-		if (strcmp(argv[i], "--debug") == 0) {
+		} else if (strcmp(argv[i], "--debug") == 0) {
 			debug = 1;
+		} else if (strcmp(argv[i], "") == 0) {
+		} else {
+			fprintf(stderr, "plugd: invalid argument '%s'\n", argv[i]);
+			fprintf(stderr, "use the --help argument for help\n");
 		}
+	}
+
+	if (do_daemonize) {
+		daemonize();
 	}
 
 	glob_t g;
