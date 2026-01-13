@@ -46,7 +46,7 @@ plugd --daemon
 ```
 ### If you don't wanna do that, you can just run it manually in the shell:
 ```bash
-# Remove --daemon to run in foreground instead of background.
+# Remove --daemon to run in foreground instead of the background.
 plugd --daemon
 ```
 ## How to uninstall plugd?
