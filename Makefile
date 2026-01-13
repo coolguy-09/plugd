@@ -1,9 +1,8 @@
-CC = gcc
-LD = $(CC)
-CFLAGS = -g -Wall -O2 -I./src/
-LDFLAGS = 
+MAKEFLAGS += --no-print-directory
 
-SRC = src/daemon.c src/plugd.c
+include mkconf
+
+SRC = src/daemon.c src/plugd.c src/other.c src/debug.c
 OBJ = $(SRC:.c=.o)
 
 PREFIX ?= /usr/local
@@ -11,13 +10,14 @@ SBIN = $(PREFIX)/sbin
 
 OUT = plugd
 
-src/%.o: src/%.c
-	@echo "  CC      $@"
-	@$(CC) $(CFLAGS) -c $< -o $@
+all: $(OUT)
 
-$(OUT): $(OBJ)
+compile:
+	@$(MAKE) -C src
+
+$(OUT): compile
 	@echo "  LD      $@.unstripped"
-	@$(LD) $(LDFLAGS) -o $@.unstripped $^
+	@$(LD) $(LDFLAGS) -o $@.unstripped $(OBJ)
 	@echo "  STRIP   $@"
 	@cp $@.unstripped $@
 	@strip $@
@@ -31,7 +31,8 @@ uninstall:
 	@rm -f $(DESTDIR)$(SBIN)/$(OUT)
 
 clean:
-	@echo "  RM      src/*.o $(OUT) $(OUT).unstripped"
-	@rm -f src/*.o $(OUT) $(OUT).unstripped
+	@$(MAKE) -C src clean
+	@echo "  RM      $(OUT) $(OUT).unstripped"
+	@rm -f $(OUT) $(OUT).unstripped
 
-
+.PHONY: compile install uninstall clean

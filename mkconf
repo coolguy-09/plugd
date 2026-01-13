@@ -1,0 +1,4 @@
+CC = gcc
+LD = $(CC)
+CFLAGS = -m32 -g -Wall -O2
+LDFLAGS = -m32
