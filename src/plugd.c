@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 			printf("    --debug: Show debug logs.\n");
 			return 0;
 		} else if (strcmp(argv[i], "--version") == 0) {
-			printf("plugd v1.1.1\n");
+			printf("plugd v1.1.1-1\n");
 			return 0;
 		} else if (strcmp(argv[i], "--debug") == 0) {
 			debug = 1;
