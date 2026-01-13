@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 			return 0;
 		}
 		if (strcmp(argv[i], "--version") == 0) {
-			printf("plugd v1.1\n");
+			printf("plugd v1.1.1\n");
 			return 0;
 		}
 		if (strcmp(argv[i], "--debug") == 0) {
@@ -39,19 +39,19 @@ int main(int argc, char *argv[]) {
 
 	if (mkdir("/dev/block", 0755) == -1) {
         if (errno != EEXIST && errno != EACCES) { 
-            fprintf(stderr, "plugd: mkdir failed: %s\n", strerror(errno));
+            fprintf(stderr, "plugd: making directory '/dev/block' failed: %s\n", strerror(errno));
 			return 1; // Critical error
 		}
     }
 
 	while(1) {
-		if (access("/dev/stdin", F_OK) != 0) { if (access("/proc/self/fd/0", F_OK) == 0) { symlink("/proc/self/fd/0", "/dev/stdin"); } }
-		if (access("/dev/stdout", F_OK) != 0) { if (access("/proc/self/fd/1", F_OK) == 0) { symlink("/proc/self/fd/1", "/dev/stdout"); } }
-		if (access("/dev/stderr", F_OK) != 0) { if (access("/proc/self/fd/2", F_OK) == 0) { symlink("/proc/self/fd/2", "/dev/stderr"); } }
-		if (access("/dev/core", F_OK) != 0) { if (access("/proc/kcore", F_OK) == 0) { symlink("/proc/kcore", "/dev/core"); } }
-		if (access("/dev/fd", F_OK) != 0) { if (access("/proc/self/fd", F_OK) == 0) { symlink("/proc/self/fd", "/dev/fd"); } }
-		if (access("/dev/rtc", F_OK) != 0) { if (access("/dev/rtc0", F_OK) == 0) { symlink("/dev/rtc0", "/dev/rtc"); } }
-		if (access("/dev/cdrom", F_OK) != 0) { if (access("/dev/sr0", F_OK) == 0) { symlink("/dev/sr0", "/dev/cdrom"); } }
+		if (access("/dev/stdin", F_OK) != 0) { if (access("/proc/self/fd/0", F_OK) == 0) { symlink("/proc/self/fd/0", "/dev/stdin"); if (debug) { fprintf(stderr, "[DEBUG] plugd: linked '/proc/self/fd/0' to '/dev/stdin' successfully\n"); } } }
+		if (access("/dev/stdout", F_OK) != 0) { if (access("/proc/self/fd/1", F_OK) == 0) { symlink("/proc/self/fd/1", "/dev/stdout"); if (debug) { fprintf(stderr, "[DEBUG] plugd: linked '/proc/self/fd/1' to '/dev/stdout' successfully\n"); } } }
+		if (access("/dev/stderr", F_OK) != 0) { if (access("/proc/self/fd/2", F_OK) == 0) { symlink("/proc/self/fd/2", "/dev/stderr"); if (debug) { fprintf(stderr, "[DEBUG] plugd: linked '/proc/self/fd/2' to '/dev/stderr' successfully\n"); } } }
+		if (access("/dev/core", F_OK) != 0) { if (access("/proc/kcore", F_OK) == 0) { symlink("/proc/kcore", "/dev/core"); if (debug) { fprintf(stderr, "[DEBUG] plugd: linked '/proc/kcore' to '/dev/core' successfully\n"); } } }
+		if (access("/dev/fd", F_OK) != 0) { if (access("/proc/self/fd", F_OK) == 0) { symlink("/proc/self/fd", "/dev/fd"); if (debug) { fprintf(stderr, "[DEBUG] plugd: linked '/proc/self/fd' to '/dev/fd' successfully\n"); } } }
+		if (access("/dev/rtc", F_OK) != 0) { if (access("/dev/rtc0", F_OK) == 0) { symlink("/dev/rtc0", "/dev/rtc"); if (debug) { fprintf(stderr, "[DEBUG] plugd: linked '/dev/rtc0' to '/dev/rtc' successfully\n"); } } }
+		if (access("/dev/cdrom", F_OK) != 0) { if (access("/dev/sr0", F_OK) == 0) { symlink("/dev/sr0", "/dev/cdrom"); if (debug) { fprintf(stderr, "[DEBUG] plugd: linked '/dev/sr0' to '/dev/cdrom' successfully\n"); } } }
 		const char *patterns[] = {"/dev/sd*", "/dev/hd*", "/dev/zram*", "/dev/fd*", "/dev/nvme*n*"};
 		int num_patterns = sizeof(patterns) / sizeof(patterns[0]); // For convinience, so don't have to manually edit for loop
         

@@ -40,6 +40,6 @@ void create_block_symlink(const char *path) {
 		if (debug) fprintf(stderr, "[DEBUG] plugd: filename: '%s', symlink name: '%s'\n", path, linkname);
 		return;
     } else {
-		if (debug) printf("[DEBUG] plugd: linked '%s' to '%s' successfully\n", path, linkname);
+		if (debug) fprintf(stderr, "[DEBUG] plugd: linked '%s' to '%s' successfully\n", path, linkname);
 	}
 }
